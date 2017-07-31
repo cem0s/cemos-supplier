@@ -30,9 +30,14 @@ class FileController extends Controller
 
    		$destination = public_path('images/').$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container;
         $imageName = $image->getClientOriginalName();
+        $fileType = $image->getMimeType();
         $image->move($destination,$imageName);
         $newD = $destination.'-wmark';
-        $this->makeWaterMark($destination.'/'.$imageName, $newD, $imageName);
+
+        if(strpos($fileType, 'video') === false) {
+            $this->makeWaterMark($destination.'/'.$imageName, $newD, $imageName);
+
+        }
 
         return response()->json(['success'=>$imageName]);
     }
@@ -46,6 +51,7 @@ class FileController extends Controller
         }
     
         copy($file, $newD.'/'.$name);
+        sleep(5);
         $newF = $newD.'/'.$name;
         $img = Image::make($file);
         $img->resize(1850, 1850);
