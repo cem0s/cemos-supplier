@@ -135,19 +135,30 @@ class Common
     }
 
 
-    public function getImages($data, $container)
+    public function getImages($data, $container, $productId = 0)
     {
-        $path = public_path('images/').$data['companyId'].'/'.$data['objectId'].'/'.$data['orderId'].'/'.$data['orderProductId'].'/'.$container.'-wmark';
-        $urlPath = 'images/'.$data['companyId'].'/'.$data['objectId'].'/'.$data['orderId'].'/'.$data['orderProductId'].'/'.$container.'-wmark';
+
+        if($productId == 8 || $productId == 9) {
+            
+             $path = public_path('Dropbox/').$data['companyId'].'/'.$data['objectId'].'/'.$data['orderId'].'/'.$data['orderProductId'].'/'.$container;
+            $urlPath = 'Dropbox/'.$data['companyId'].'/'.$data['objectId'].'/'.$data['orderId'].'/'.$data['orderProductId'].'/'.$container;
+        } else {
+
+            $path = public_path('Dropbox/').$data['companyId'].'/'.$data['objectId'].'/'.$data['orderId'].'/'.$data['orderProductId'].'/'.$container.'-wmark';
+            $urlPath = 'Dropbox/'.$data['companyId'].'/'.$data['objectId'].'/'.$data['orderId'].'/'.$data['orderProductId'].'/'.$container.'-wmark';
+   
+        }
+     
         $files = scandir($path);
         if(!empty($files)) {
             foreach ($files as $key => $value) {
                 if($value != "." && $value != "..") {
-                    if(strpos(mime_content_type($path.'/'.$value), 'video') !== false){
-                        $iFiles[$key]['file'] = 'public/'.$urlPath.'/'.$value;
-                    } else {
-                        $iFiles[$key]['file'] = $urlPath.'/'.$value;
-                    }
+                    // if(strpos(mime_content_type($path.'/'.$value), 'video') !== false){
+                    //     $iFiles[$key]['file'] = 'public/'.$urlPath.'/'.$value;
+                    // } else {
+                    //     $iFiles[$key]['file'] = $urlPath.'/'.$value;
+                    // }
+                    $iFiles[$key]['file'] = 'public/'.$urlPath.'/'.$value; 
                     $iFiles[$key]['type'] = mime_content_type($path.'/'.$value);
                 }
             }

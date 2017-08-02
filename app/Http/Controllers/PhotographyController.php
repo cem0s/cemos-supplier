@@ -52,11 +52,11 @@ class PhotographyController extends Controller
     			); 
 
     		if($results[0]['step'] == 2){
-    			$files = $this->common->getImages($fileArray, 'raw');
+    			$files = $this->common->getImages($fileArray, 'raw', $results[0]['product']['id']);
     		} else  if($results[0]['step'] == 3) {
-    			$files = $this->common->getImages($fileArray, 'edited');
+    			$files = $this->common->getImages($fileArray, 'edited', $results[0]['product']['id']);
     		}
-    	
+ 
     		return view('pages.photography.index')->with('data',array(
 	    			'orderP'=> $results[0], 
 	    			'order' => $order,
@@ -76,10 +76,9 @@ class PhotographyController extends Controller
     	$orderId = $request->all()['orderId'];
     	$step = $request->all()['step'];
     	$repo = $this->em->getRepository('App\Entity\Commerce\OrderProduct');
-    	$orderRepo = $this->em->getRepository('App\Entity\Commerce\Order');
     	
     	$repo->updateOrderProductStatusById(6, $orderPId, $step);
-    	$orderRepo->updateOrderStatus(array('orderId'=>$orderId, 'id'=>5));
+    	
 
     	return response()->json(['success'=>'success']);
     }

@@ -104,7 +104,8 @@ class OrderProductRepository extends EntityRepository
 			if(($result->getProductId() == 10 && $step == 3 ) || ($result->getProductId() == 11 && $step == 3 ) ||
 				($result->getProductId() == 1 && $step == 4 ) || ($result->getProductId() == 2 && $step == 4 ) ||
 				($result->getProductId() == 3 && $step == 4 ) || ($result->getProductId() == 4 && $step == 4 ) ||
-				($result->getProductId() == 5 && $step == 4 ) || ($result->getProductId() == 6 && $step == 4 )
+				($result->getProductId() == 5 && $step == 4 ) || ($result->getProductId() == 6 && $step == 4 ) ||
+				($result->getProductId() == 8 && $step == 4 ) || ($result->getProductId() == 9 && $step == 4 ) 
 			) {
 				$statusId = 8;
 			}
@@ -122,6 +123,10 @@ class OrderProductRepository extends EntityRepository
 			
 			$this->_em->merge($result);
 			$this->_em->flush();
+
+			//This checks if the the order status should be updated to delivered if 
+			//all the order products under it is delivered.
+			$this->checkForUpdateOrderStatus($result->getOrderId());
 
 			if($statusId == 6 ){
 				$nRepo->addNotif(array(
@@ -273,7 +278,28 @@ class OrderProductRepository extends EntityRepository
 		return $result;
 	}
 
-	
+	public function checkForUpdateOrderStatus($id)
+	{
+		$repo = $this->_em->getRepository(\App\Entity\Commerce\OrderProduct::class);
+		$orderRepo = $this->_em->getRepository(\App\Entity\Commerce\Order::class);
+		$results = $repo->findBy(array('orderId'=> $id));
+		$isDelivered = false;
+		$pCount = count($results);
+		$c = 0;
+		if(!empty($results)) {
+			foreach ($results as $key => $value) {
+				if($value->getOrderProductStatusId() == 8){
+					$c++;
+				} 
+			}
+		}
+
+		if($pCount == $c) {
+			$orderRepo->updateOrderStatus(array('orderId' => $id,'id' => 7));
+		} else {
+			$orderRepo->updateOrderStatus(array('orderId' => $id,'id' => 5));
+		}
+	}
 }
 
 ?>

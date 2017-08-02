@@ -118,7 +118,7 @@
       method: "post",
       withCredentials: false,
       timeout: 30000,
-      parallelUploads: 2,
+      parallelUploads: 1,
       uploadMultiple: false,
       maxFilesize: 256,
       paramName: "file",

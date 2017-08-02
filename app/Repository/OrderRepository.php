@@ -161,11 +161,12 @@ class OrderRepository extends EntityRepository
 	{
 		$result = $this->_em->find(\App\Entity\Commerce\Order::class, $data['orderId']);
 		$orderProductRepo = $this->_em->getRepository('App\Entity\Commerce\OrderProduct');
-		if(!empty(array($result))){
+
+		if(count($result)>0){
 			$result->setOrderStatusId($data['id']);
 			$this->_em->merge($result);
 			$this->_em->flush();
-
+			
 			if($data['id'] == 3){
 				$orderProductRepo->updateOrderProductStatusByOrderId(4, $data['orderId']);
 			}

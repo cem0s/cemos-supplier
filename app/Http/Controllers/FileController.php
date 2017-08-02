@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use ZipArchive;
 use Image;
+use Exception;
 
 class FileController extends Controller
 {
@@ -28,7 +29,7 @@ class FileController extends Controller
             $container = "delivered";
         }
 
-   		$destination = public_path('images/').$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container;
+   		$destination = public_path('Dropbox/').$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container;
         $imageName = $image->getClientOriginalName();
         $fileType = $image->getMimeType();
         $image->move($destination,$imageName);
@@ -51,13 +52,17 @@ class FileController extends Controller
         }
     
         copy($file, $newD.'/'.$name);
-        sleep(5);
+   
         $newF = $newD.'/'.$name;
-        $img = Image::make($file);
+       
+        $img = Image::make($newF);
+
         $img->resize(1850, 1850);
-        $img->insert(public_path('images/cemos_logo.png'), 'bottom-right', 10, 10); //insert watermark in (also from public_directory)
+        $img->insert(public_path('images/cemos_logo.png'), 'bottom-right', 10, 10); 
         $img->save($newF); //save created image
+        $img->destroy();
         return $newF; //return value
+        
     }
 
 
@@ -88,8 +93,8 @@ class FileController extends Controller
         if(($step == 2 && $pId ==10) || ($step == 2 && $pId ==11)) {
             $container = "delivered";
         }
-        $source = public_path('images/').$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container.'/'.$filename;
-    	$wmark = public_path('images/').$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container.'-wmark/'.$filename;
+        $source = public_path('Dropbox/').$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container.'/'.$filename;
+    	$wmark = public_path('Dropbox/').$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container.'-wmark/'.$filename;
     	if(file_exists($source)) {
             unlink($source);
     		unlink($wmark);
@@ -111,9 +116,9 @@ class FileController extends Controller
             $container = "edited";
         }
 
-        $public_dir=public_path().'/images/'.$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container;
+        $public_dir=public_path().'/Dropbox/'.$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container;
         $zipFileName = $zipName.'.zip';
-
+      
         $this->zip($public_dir, $zipFileName, $container);
 
         $headers = array(
@@ -139,7 +144,7 @@ class FileController extends Controller
             $container = "delivered";
         }
 
-        $public_dir=public_path().'/images/'.$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container;
+        $public_dir=public_path().'Dropbox/'.$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container;
         $zipFileName = $zipName.'.zip';
 
         $this->zip($public_dir, $zipFileName, $container);
@@ -167,7 +172,7 @@ class FileController extends Controller
             $container = "delivered";
         }
        
-        $destination = public_path('images/').$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container;
+        $destination = public_path('Dropbox/').$companyId.'/'.$objId.'/'.$orderId.'/'.$orderPId.'/'.$container;
         $imageName = $image->getClientOriginalName();
         $image->move($destination,$imageName);
         return response()->json(['success'=>$imageName]);
