@@ -44,11 +44,7 @@
 		<div class="row">
 			<div class="col-sm-4">
 				<b>Special Instructions</b><br><br>
-				@if(isset($data['orderP']['data']['photoComment']))
-					{{$data['orderP']['data']['photoComment']}}
-				@elseif(isset($data['orderP']['data']['videoComment']))
-					{{$data['orderP']['data']['videoComment']}}
-				@elseif(isset($data['orderP']['data']['giveawayTxt']))
+				@if(isset($data['orderP']['data']['giveawayTxt']))
 					{{$data['orderP']['data']['giveawayTxt']}}
 				@endif
 				

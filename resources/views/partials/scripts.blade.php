@@ -35,5 +35,5 @@
 <script src="{{ asset('js/custom.js')}}"></script>
 
 
-</script>
+<script src="{{ asset('js/embed.js')}}"></script>
 

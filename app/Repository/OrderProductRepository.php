@@ -105,7 +105,8 @@ class OrderProductRepository extends EntityRepository
 				($result->getProductId() == 1 && $step == 4 ) || ($result->getProductId() == 2 && $step == 4 ) ||
 				($result->getProductId() == 3 && $step == 4 ) || ($result->getProductId() == 4 && $step == 4 ) ||
 				($result->getProductId() == 5 && $step == 4 ) || ($result->getProductId() == 6 && $step == 4 ) ||
-				($result->getProductId() == 8 && $step == 4 ) || ($result->getProductId() == 9 && $step == 4 ) 
+				($result->getProductId() == 8 && $step == 4 ) || ($result->getProductId() == 9 && $step == 4 ) ||
+				($result->getProductId() == 7 && $step == 3)  
 			) {
 				$statusId = 8;
 			}

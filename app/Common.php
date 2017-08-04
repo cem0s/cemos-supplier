@@ -88,7 +88,7 @@ class Common
     			$aUrl = "floorplan-drawer";
     			break;
     		case 2:
-    			$aUrl = "quality-checker";
+    			$aUrl = "floorplan-checker";
     			break;
     		default:
     			$aUrl = "";

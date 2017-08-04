@@ -129,7 +129,7 @@ function confirmEdited()
 
 function submitFiles(id, orderId, step, e)
 {
-	var countImages = $('div.dz-preview').length;
+	//var countImages = $('div.dz-preview').length;
 	var isEdited = $('#isEdited').val();
 	if(isEdited == 1){
 		step += 2;
@@ -137,25 +137,25 @@ function submitFiles(id, orderId, step, e)
 		step += 1;
 	}
 
-	if(countImages == 0 ){
-		alert("Please upload some images first.");
-	} else {
-		$.ajax({
-			url:"/cemos-supplier/submit-images",
-			data: {id:id, orderId:orderId, step:step},
-			beforeSend: function() {
-				$(e).attr('disabled', true);
-				$(e).next().css('display','inline');	
-			},
-			success: function(res) {
-				if(res.success=="success"){
-					alert("Files are delivered!");
-					window.location.href = '/cemos-supplier/dashboard';
-				}
-				
+	// if(countImages == 0 ){
+	// 	alert("Please upload some images first.");
+	// } else {
+	$.ajax({
+		url:"/cemos-supplier/submit-images",
+		data: {id:id, orderId:orderId, step:step},
+		beforeSend: function() {
+			$(e).attr('disabled', true);
+			$(e).next().css('display','inline');	
+		},
+		success: function(res) {
+			if(res.success=="success"){
+				alert("Files are delivered!");
+				window.location.href = '/cemos-supplier/dashboard';
 			}
-		});
-	}
+			
+		}
+	});
+	//}
 
 }
 

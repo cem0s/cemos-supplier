@@ -131,7 +131,7 @@ class OrderRepository extends EntityRepository
 	public function getOrderById($id)
 	{
 		$qb = $this->_em->createQueryBuilder();
-		$qb->select('o.id, o.objectId as objectId, c.name as company, u.firstName, u.lastName, o.createdAt, s.name as status, p.name as objectName, p.slug, p.address1, p.town, p.country, p.zipcode')
+		$qb->select('o.id, o.objectId as objectId, c.name as company, u.firstName, u.lastName, u.email, o.createdAt, s.name as status, p.name as objectName, p.slug, p.address1, p.town, p.country, p.zipcode')
 		   ->from('App\Entity\Commerce\Order', 'o')
 		   ->leftJoin('App\Entity\Management\Company','c','WITH','c.id = o.companyId')
 		   ->leftJoin('App\Entity\Management\User','u','WITH','u.id = o.userId')

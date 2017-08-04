@@ -47,4 +47,10 @@ Route::group(['middleware' => ['auth','web']], function(){
 
 	Route::get('/upload-brochure/{id}','MarketingController@index')->name('upload-brochure');
 	Route::get('/brochure-checker/{id}','MarketingController@index')->name('brochure-checker');
+
+	Route::get('/floorplan-drawer/{id}','FloorPlannerController@index')->name('floorplan-drawer');
+	Route::get('/floorplan-checker/{id}','FloorPlannerController@index')->name('floorplan-checker');
+	Route::post('/submit-floorplan','FloorPlannerController@submitFloorplan')->name('submit-floorplan');
+	Route::get('/submit-floorplan','FloorPlannerController@submitFloorplan')->name('submit-floorplan');
+	Route::get('/save-callback/{objId}/{oId}/{cId}/{opId}/{slug}','FloorPlannerController@saveFloorplanCallback')->name('save-callback');
 });
