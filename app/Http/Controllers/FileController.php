@@ -46,7 +46,7 @@ class FileController extends Controller
 
     public function makeWaterMark($file, $newD, $name)
     {
-        
+        ini_set('memory_limit','256M');
         if(!is_dir($newD)){
             mkdir($newD,0777);
         }
@@ -61,6 +61,7 @@ class FileController extends Controller
         $img->insert(public_path('images/cemos_logo.png'), 'bottom-right', 10, 10); 
         $img->save($newF); //save created image
         $img->destroy();
+        
         return $newF; //return value
         
     }
