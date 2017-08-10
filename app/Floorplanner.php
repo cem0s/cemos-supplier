@@ -110,10 +110,12 @@ class Floorplanner
         $options = array(
             'pid' => $floorid,
             'resolution' => array('width' => $width, 'height' => $height),
-            'callback' => 'http://' . $_SERVER['HTTP_HOST'] . '/cemos-supplier/save-callback/' . $objectId . '/' . $orderId . '/'. $companyId.'/'. $orderPId.'/'. $objectSlug
+            'callback' => 'http://127.0.0.1:88/cemos-supplier/save-callback/' . $objectId . '/' . $orderId . '/'. $companyId.'/'. $orderPId.'/'. $objectSlug,
+            // 'send_to' => $data['email'],
+            'send_to' => 'gladys@cemos.ph'
         );
     
-    	print_r('http://' . $_SERVER['HTTP_HOST'] . '/cemos-supplier/save-callback/' . $objectId . '/' . $orderId . '/'. $companyId.'/'. $orderPId.'/'. $objectSlug);exit;
+    	// print_r('http://' . $_SERVER['HTTP_HOST'] . '/cemos-supplier/save-callback/' . $objectId . '/' . $orderId . '/'. $companyId.'/'. $orderPId.'/'. $objectSlug);exit;
        
         $result = $this->fp->exportFloorplanImages($floorid, $options);
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\Mail;
+use SimpleXMLElement;
 use App\Floorplanner;
 use App\Dropbox;
 
@@ -44,7 +45,7 @@ class FloorPlannerController extends Controller
     				'orderId' => $order['id'],
     				'orderPId' => $results[0]['id']
     			);
-    
+   
  			$files = $this->getFilesFromDropbox($data, $results[0]['data']['floors']);
  			$fp = $this->getFloorPlan($data, $order['objectName'], $order['email']);
  			
@@ -104,9 +105,15 @@ class FloorPlannerController extends Controller
 
     public function saveFloorplanCallback($objId, $orderId, $companyId, $orderPId, $slug, Request $request)
     {
-      
+        
         $body = $request->getContent();
-       	mail("gladys@cemos.ph", "test", $body);
+
+       Mail::send('emails.sample', ['data' => $body], function($message)
+{
+    $message->to('vailoces.gladys@gmail.com', 'John Smith')->subject('Welcome!');
+});
+
+  		print_r("<pre>");print_r($request->all()); exit;
         $xlink = str_replace('xlink:', '', $body);
         $xmlns = str_replace('xmlns:', '', $xlink);
         $result = new SimpleXMLElement($xmlns);
@@ -125,7 +132,7 @@ class FloorPlannerController extends Controller
         if (!file_exists($dir)) {
             mkdir($dir, 0777, true);
         }
-        print_r("Test");exit;
+        
         $zip = new ZipArchive;
         $res = $zip->open($zipFile);
 

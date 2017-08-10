@@ -112,6 +112,7 @@
 					<input type="hidden" name="orderPId" value="{{ $data['orderP']['id']}}">
 					<input type="hidden" name="objectId" value="{{ $data['order']['objectId']}}">
 					<input type="hidden" name="objectSlug" value="{{ $data['order']['slug']}}">
+					<input type="hidden" name="email" value="{{ $data['order']['email']}}">
 					<input type="hidden" name="_token" value="{{ csrf_token()}}">	
 					<br><br>
 					@if($data['orderP']['step'] == 1) 

@@ -57,7 +57,7 @@ class FileController extends Controller
        
         $img = Image::make($newF);
 
-        $img->resize(1850, 1850);
+        $img->resize(2000, 1500);
         $img->insert(public_path('images/cemos_logo.png'), 'bottom-right', 10, 10); 
         $img->save($newF); //save created image
         $img->destroy();
