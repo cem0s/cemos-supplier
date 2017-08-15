@@ -104,12 +104,14 @@ class OrderRepository extends EntityRepository
 	public function getAllOrders()
 	{
 		$qb = $this->_em->createQueryBuilder();
-		$qb->select('o.id, c.name as company, u.firstName, u.lastName, o.createdAt, s.name as status, p.name as objectName, p.address1, p.town, p.country, p.zipcode')
+		$qb->select('o.id, c.name as company, u.firstName, u.lastName, o.createdAt, s.name as status, p.name as objectName, p.address1, p.town, p.country, p.zipcode, pr.name, op.step, op.productId')
 		   ->from('App\Entity\Commerce\Order', 'o')
 		   ->leftJoin('App\Entity\Management\Company','c','WITH','c.id = o.companyId')
 		   ->leftJoin('App\Entity\Management\User','u','WITH','u.id = o.userId')
 		   ->leftJoin('App\Entity\Commerce\Status','s','WITH','s.id = o.orderStatusId')
-		   ->leftJoin('App\Entity\Realestate\Object','p','WITH','p.id = o.objectId');
+		   ->leftJoin('App\Entity\Realestate\Object','p','WITH','p.id = o.objectId')
+		   ->leftJoin('App\Entity\Commerce\OrderProduct','op','WITH','op.orderId = o.id')
+		   ->leftJoin('App\Entity\Commerce\Product','pr','WITH','pr.id = op.productId');
 
 		$queryResult = $qb->getQuery()->getArrayResult();
 		if(!empty($queryResult)) {

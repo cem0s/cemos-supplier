@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth','web']], function(){
 
 	Route::get('/get-notif', 'NotificationController@getNotifs')->name('get-notif');
 
+	Route::get('/error-page', 'ErrorController@errorPage')->name('error-page');
+
 	Route::get('/upload-brochure/{id}','MarketingController@index')->name('upload-brochure');
 	Route::get('/brochure-checker/{id}','MarketingController@index')->name('brochure-checker');
 

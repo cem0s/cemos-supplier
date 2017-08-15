@@ -46,7 +46,7 @@ class FileController extends Controller
 
     public function makeWaterMark($file, $newD, $name)
     {
-        ini_set('memory_limit','256M');
+        ini_set('memory_limit','1024M');
         if(!is_dir($newD)){
             mkdir($newD,0777);
         }
